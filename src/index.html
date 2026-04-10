@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>Landscape Lighting & More | San Diego</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{background:#000;color:#f0ead8;font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none;}
+
+        /* CURSOR */
+        #dot{position:fixed;width:6px;height:6px;background:#f0b429;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;}
+        #ring{position:fixed;width:32px;height:32px;border:1px solid rgba(240,180,41,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .1s,top .1s;}
+        ::-webkit-scrollbar{width:2px;}::-webkit-scrollbar-thumb{background:#a07818;}
+
+        /* ── NAV ── */
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;height:66px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(240,180,41,.08);}
+        .n-logo{display:flex;align-items:center;text-decoration:none;}
+        .n-logo-crop{width:174px;max-width:48vw;height:46px;display:block;overflow:hidden;position:relative;}
+        .n-logo-img{width:100%;height:auto;display:block;transform:translateY(-128px);}
+        .n-logo svg{width:30px;height:30px;}
+        .n-logo-txt{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:400;line-height:1.15;color:#f0ead8;}
+        .n-logo-txt span{display:block;font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:3.5px;text-transform:uppercase;color:#f0b429;font-weight:300;margin-top:1px;}
+        .n-links{display:flex;gap:36px;list-style:none;align-items:center;}
+        .n-links a{color:#5a5a5a;text-decoration:none;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:300;transition:color .3s;position:relative;}
+        .n-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:#f0b429;transition:width .35s;}
+        .n-links a:hover,.n-links a.on{color:#f0ead8;}
+        .n-links a:hover::after,.n-links a.on::after{width:100%;}
+        .n-cta{border:1px solid rgba(240,180,41,.4);color:#f0b429!important;padding:7px 20px!important;}
+        .n-cta::after{display:none!important;}
+        .n-cta:hover{background:#f0b429!important;color:#000!important;}
+        .ham{display:none;flex-direction:column;gap:5px;cursor:none;}
+        .ham span{display:block;width:20px;height:1px;background:#f0ead8;transition:all .3s;}
+        .ham.o span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+        .ham.o span:nth-child(2){opacity:0;}
+        .ham.o span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+        .mob{display:none;position:fixed;inset:0;background:#000;z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:40px;}
+        .mob.o{display:flex;}
+        .mob a{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:rgba(240,234,216,.6);text-decoration:none;transition:color .3s;}
+        .mob a:hover{color:#f0b429;}
+        .mob .m-b{font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:3px;text-transform:uppercase;background:#f0b429;color:#000;padding:13px 40px;}
+
+        /* ════════════════════
+           HERO
+        ════════════════════ */
+        #home{
+            min-height:100vh;background:#000;
+            position:relative;overflow:hidden;
+            display:flex;align-items:center;
+            padding-top:66px;
+        }
+
+        /* ── PENDANT LIGHTS STRIP ── */
+        .pendants-wrap{
+            position:absolute;
+            top:0;left:0;right:0;
+            height:280px;
+            pointer-events:none;
+            z-index:2;
+        }
+        /* The horizontal wire */
+        .wire{
+            position:absolute;
+            top:40px;left:6%;right:6%;
+            height:1.5px;
+            background:linear-gradient(to right,
+            transparent 0%,
+            rgba(200,170,80,.5) 5%,
+            rgba(200,170,80,.75) 20%,
+            rgba(210,180,90,.85) 50%,
+            rgba(200,170,80,.75) 80%,
+            rgba(200,170,80,.5) 95%,
+            transparent 100%
+            );
+        }
+        /* Wall mounts at ends */
+        .mount{
+            position:absolute;
+            top:34px;
+            width:14px;height:14px;
+            border:1px solid rgba(200,160,60,.5);
+            border-radius:50%;
+            background:#0a0800;
+        }
+        .mount::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:rgba(240,180,41,.4);}
+        .mount-l{left:5%;}
+        .mount-r{right:5%;}
+
+        /* Each pendant bulb */
+        .pendant{
+            position:absolute;
+            top:42px;
+            display:flex;flex-direction:column;align-items:center;
+            animation:sway 4s ease-in-out infinite;
+            transform-origin:top center;
+        }
+        .pendant:nth-child(odd){animation-duration:4.5s;animation-delay:.3s;}
+        .pendant:nth-child(3n){animation-duration:5.2s;animation-delay:.8s;}
+        @keyframes sway{
+            0%,100%{transform:rotate(-0.6deg);}
+            50%{transform:rotate(0.6deg);}
+        }
+
+        /* Drop cord */
+        .p-cord{width:1.5px;height:68px;background:linear-gradient(to bottom,rgba(200,170,80,.7),rgba(200,170,80,.4));}
+
+        /* Bulb socket cap */
+        .p-cap{width:18px;height:8px;background:linear-gradient(to bottom,#2a1e00,#1a1200);border-radius:3px 3px 0 0;border:1px solid rgba(180,140,40,.3);}
+
+        /* Bulb glass body — Edison pendant teardrop */
+        .p-bulb{
+            width:38px;height:52px;
+            border-radius:50% 50% 45% 45% / 40% 40% 55% 55%;
+            position:relative;
+            overflow:visible;
+        }
+        .p-bulb-inner{
+            position:absolute;inset:0;
+            border-radius:inherit;
+            background:radial-gradient(ellipse 60% 55% at 38% 35%,
+            rgba(255,255,220,.95) 0%,
+            rgba(255,230,120,.85) 25%,
+            rgba(240,180,40,.75) 55%,
+            rgba(200,130,20,.6) 80%,
+            rgba(160,100,10,.4) 100%
+            );
+            border:1px solid rgba(240,180,41,.35);
+        }
+        /* Glass highlight */
+        .p-bulb-shine{
+            position:absolute;
+            top:8px;left:7px;
+            width:10px;height:16px;
+            border-radius:50%;
+            background:rgba(255,255,255,.28);
+            transform:rotate(-15deg);
+        }
+        /* Filament glow inside */
+        .p-bulb-fil{
+            position:absolute;
+            bottom:14px;left:50%;
+            transform:translateX(-50%);
+            width:18px;height:10px;
+            border-bottom:1.5px solid rgba(255,255,200,.6);
+            border-radius:0 0 50% 50%;
+        }
+
+        /* Outer glow halo */
+        .p-glow{
+            position:absolute;
+            top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            width:100px;height:100px;
+            border-radius:50%;
+            background:radial-gradient(circle,rgba(240,180,41,.22) 0%,rgba(240,180,41,.08) 40%,transparent 70%);
+            pointer-events:none;
+            z-index:-1;
+        }
+        /* Floor light cast from pendants */
+        .p-floor{
+            position:absolute;
+            bottom:-80px;left:50%;
+            transform:translateX(-50%);
+            width:80px;height:30px;
+            border-radius:50%;
+            background:radial-gradient(ellipse,rgba(240,180,41,.12) 0%,transparent 70%);
+        }
+
+        /* Ground ambient */
+        .gnd{
+            position:absolute;bottom:0;left:0;right:0;height:35%;
+            background:linear-gradient(to top,rgba(240,180,41,.04),transparent);
+            pointer-events:none;
+        }
+
+        /* Floating dust */
+        .fp{position:absolute;width:1.5px;height:1.5px;background:#ffe066;border-radius:50%;animation:fpUp linear infinite;pointer-events:none;}
+        @keyframes fpUp{0%{opacity:0;transform:translateY(0);}15%{opacity:.7;}85%{opacity:.2;}100%{opacity:0;transform:translateY(-50vh);}}
+
+        /* ── HERO CONTENT ── */
+        .hero-inner{
+            position:relative;z-index:10;
+            max-width:1240px;margin:0 auto;width:100%;
+            padding:120px 5% 60px;
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            align-items:center;
+            gap:60px;
+        }
+        .hero-left{opacity:0;animation:hL 1.2s .3s cubic-bezier(.22,1,.36,1) forwards;}
+        @keyframes hL{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+        .h-ey{font-size:.62rem;letter-spacing:5px;text-transform:uppercase;color:#f0b429;font-weight:300;display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+        .h-ey::before{content:'';width:32px;height:1px;background:#f0b429;}
+        .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.4rem,6vw,5.6rem);font-weight:300;line-height:.94;letter-spacing:0;margin-bottom:6px;}
+        .h-title .g{color:#f0b429;font-style:italic;}
+        .h-amp{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:300;font-style:italic;color:rgba(240,234,216,.28);margin-bottom:4px;}
+        .h-more{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,4.5vw,3.8rem);font-weight:300;color:rgba(240,234,216,.82);margin-bottom:28px;}
+        .h-sub{font-size:.84rem;color:#5a5a5a;line-height:1.95;max-width:380px;margin-bottom:40px;font-weight:300;}
+        .h-sub strong{color:rgba(240,180,41,.9);font-weight:400;}
+        .h-btns{display:flex;gap:14px;flex-wrap:wrap;}
+
+        /* BUTTONS */
+        .btn-gold{background:#f0b429;color:#000;padding:14px 32px;font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:500;text-decoration:none;display:inline-block;border:none;cursor:none;transition:all .35s;position:relative;overflow:hidden;}
+        .btn-gold::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.2);transform:translateX(-110%);transition:transform .4s;}
+        .btn-gold:hover::after{transform:none;}
+        .btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 44px rgba(240,180,41,.3);}
+        .btn-ghost{background:transparent;color:#f0ead8;padding:14px 32px;border:1px solid rgba(240,234,216,.12);font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;font-weight:300;text-decoration:none;display:inline-block;transition:all .35s;cursor:none;}
+        .btn-ghost:hover{border-color:rgba(240,180,41,.5);color:#f0b429;}
+
+        /* ── HERO RIGHT — Circular photo frame ── */
+        .hero-right{
+            opacity:0;animation:hR 1.4s .5s cubic-bezier(.22,1,.36,1) forwards;
+            display:flex;align-items:center;justify-content:center;
+            position:relative;
+        }
+        @keyframes hR{from{opacity:0;transform:scale(.93);}to{opacity:1;transform:none;}}
+
+        .circle-frame{
+            position:relative;
+            width:clamp(300px,38vw,480px);
+            height:clamp(300px,38vw,480px);
+            border-radius:50%;
+            overflow:hidden;
+            border:1px solid rgba(240,180,41,.25);
+            box-shadow:
+                    0 0 0 8px rgba(240,180,41,.04),
+                    0 0 0 16px rgba(240,180,41,.025),
+                    0 30px 100px rgba(240,180,41,.12),
+                    inset 0 0 60px rgba(0,0,0,.6);
+        }
+        .circle-frame img{
+            width:100%;height:100%;
+            object-fit:cover;
+            object-position:center;
+            display:block;
+            filter:brightness(.85) saturate(1.1);
+            transition:transform 8s ease;
+        }
+        .circle-frame:hover img{transform:scale(1.04);}
+
+        /* Gold ring decoration */
+        .circle-ring{
+            position:absolute;
+            inset:-16px;
+            border-radius:50%;
+            border:1px solid rgba(240,180,41,.12);
+            pointer-events:none;
+        }
+        .circle-ring2{
+            position:absolute;
+            inset:-30px;
+            border-radius:50%;
+            border:1px solid rgba(240,180,41,.06);
+            pointer-events:none;
+        }
+        /* Frame overlay — darkens edges */
+        .circle-overlay{
+            position:absolute;inset:0;
+            border-radius:50%;
+            background:radial-gradient(circle,transparent 50%,rgba(0,0,0,.55) 100%);
+            pointer-events:none;
+        }
+        /* Label badge on the circle */
+        .circle-badge{
+            position:absolute;
+            bottom:10%;left:50%;transform:translateX(-50%);
+            background:rgba(0,0,0,.75);
+            backdrop-filter:blur(10px);
+            border:1px solid rgba(240,180,41,.25);
+            padding:8px 20px;
+            font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#f0b429;
+            white-space:nowrap;font-weight:300;
+            z-index:2;
+        }
+
+        /* Floating stat pill */
+        .stat-pill{
+            position:absolute;
+            background:rgba(5,5,0,.9);
+            border:1px solid rgba(240,180,41,.2);
+            backdrop-filter:blur(10px);
+            padding:12px 20px;
+            white-space:nowrap;
+        }
+        .sp-top{top:8%;right:-8%;}
+        .sp-bot{bottom:12%;left:-10%;}
+        .sp-val{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:#f0b429;display:block;line-height:1;}
+        .sp-lbl{font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:#5a5a5a;font-weight:300;margin-top:3px;}
+
+        /* Scroll cue */
+        .scrl{position:absolute;bottom:28px;left:5%;display:flex;align-items:center;gap:10px;color:#3a3a3a;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;z-index:10;}
+        .scrl::before{content:'';display:block;width:1px;height:44px;background:linear-gradient(to bottom,#f0b429,transparent);animation:sp2 2.2s ease-in-out infinite;}
+        @keyframes sp2{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+        /* ════════════════════
+           SERVICES OVERVIEW
+        ════════════════════ */
+        #services{background:#000;padding:90px 5%;}
+        .sec-header{text-align:center;max-width:580px;margin:0 auto 64px;}
+        .sec-tag{font-size:.6rem;letter-spacing:5px;text-transform:uppercase;color:#f0b429;font-weight:300;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;}
+        .sec-tag::before,.sec-tag::after{content:'';flex:1;max-width:50px;height:1px;background:rgba(240,180,41,.4);}
+        .sec-h{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:300;line-height:1.05;margin-bottom:14px;}
+        .sec-h em{font-style:italic;color:#f0b429;}
+        .sec-p{font-size:.84rem;color:#5a5a5a;line-height:1.9;font-weight:300;}
+
+        .srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1200px;margin:0 auto;}
+        .srv{background:#050505;padding:40px 36px;border-bottom:2px solid transparent;position:relative;overflow:hidden;transition:all .45s;cursor:default;}
+        .srv::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(240,180,41,.045) 0%,transparent 55%);opacity:0;transition:opacity .4s;}
+        .srv:hover::before{opacity:1;}
+        .srv:hover{border-bottom-color:#f0b429;transform:translateY(-3px);}
+        .srv-ico{width:50px;height:50px;margin-bottom:24px;position:relative;}
+        .srv-ico svg{width:100%;height:100%;}
+        .srv-glow{position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(circle,rgba(240,180,41,.18) 0%,transparent 70%);opacity:0;transition:opacity .4s;}
+        .srv:hover .srv-glow{opacity:1;}
+        .srv-name{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-weight:400;margin-bottom:10px;color:#f0ead8;}
+        .srv-desc{font-size:.8rem;color:#5a5a5a;line-height:1.85;font-weight:300;}
+        .srv-more{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:.62rem;letter-spacing:2.5px;text-transform:uppercase;color:#f0b429;opacity:0;transform:translateX(-6px);transition:all .35s;}
+        .srv:hover .srv-more{opacity:1;transform:none;}
+        .srv-more svg{width:10px;height:10px;}
+        .free-badge{position:absolute;top:18px;right:18px;background:#f0b429;color:#000;font-size:.52rem;letter-spacing:3px;text-transform:uppercase;font-weight:600;padding:3px 10px;}
+
+        .srv-cta-bar{text-align:center;margin-top:48px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+        /* ════════════════════
+           BOOK
+        ════════════════════ */
+        #book{background:#000;padding:100px 5%;border-top:1px solid rgba(240,180,41,.07);position:relative;overflow:hidden;}
+        #book::before{content:'';position:absolute;bottom:-20%;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse at center bottom,rgba(240,180,41,.055) 0%,transparent 65%);pointer-events:none;}
+        .book-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;position:relative;z-index:1;}
+        .book-left p{font-size:.84rem;color:#5a5a5a;line-height:1.95;margin-bottom:32px;font-weight:300;}
+        .contact-rows{display:flex;flex-direction:column;gap:13px;}
+        .c-row{display:flex;align-items:center;gap:12px;font-size:.82rem;font-weight:300;}
+        .c-ico{width:32px;height:32px;border:1px solid rgba(240,180,41,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+        .c-ico svg{width:13px;height:13px;stroke:#f0b429;}
+        .c-row a{color:#f0ead8;text-decoration:none;transition:color .3s;}
+        .c-row a:hover{color:#f0b429;}
+        .c-row span{color:#5a5a5a;}
+        .hrs-mini{margin:28px 0;display:grid;grid-template-columns:1fr 1fr;gap:0;}
+        .hr{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+        .hr .d{font-size:.74rem;color:#5a5a5a;font-weight:300;}
+        .hr .t{font-size:.74rem;color:#f0ead8;font-weight:300;}
+        .hr.cls .t{color:#2a2a2a;}
+        .book-form{background:#050505;border:1px solid rgba(240,180,41,.08);padding:44px;}
+        .fh{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:300;margin-bottom:28px;color:#f0ead8;}
+        .fg{margin-bottom:18px;}
+        .fl{display:block;font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:#5a5a5a;margin-bottom:7px;font-weight:300;}
+        .fi,.fsel,.fta{width:100%;background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.055);color:#f0ead8;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:300;outline:none;border-radius:0;transition:border .3s;}
+        .fi:focus,.fsel:focus,.fta:focus{border-color:rgba(240,180,41,.38);background:rgba(240,180,41,.015);}
+        .fsel{cursor:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23f0b429' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+        .fsel option{background:#0a0a0a;}
+        .fta{resize:vertical;min-height:86px;}
+        .frow2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+        .fsub{width:100%;background:#f0b429;color:#000;border:none;padding:14px;font-family:'DM Sans',sans-serif;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;font-weight:500;cursor:none;transition:all .3s;margin-top:6px;}
+        .fsub:hover{background:#ffe066;box-shadow:0 8px 40px rgba(240,180,41,.28);}
+        .f-ok{display:none;text-align:center;padding:50px 16px;}
+        .f-ok p{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;margin-top:18px;line-height:1.5;}
+        .f-ok small{display:block;margin-top:10px;font-size:.74rem;color:#5a5a5a;}
+
+        /* FOOTER */
+        footer{background:#000;border-top:1px solid rgba(240,180,41,.07);padding:38px 5%;}
+        .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;max-width:1200px;margin:0 auto;}
+        .ft-logo{font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:300;}
+        .ft-logo em{font-style:italic;color:#f0b429;}
+        .ft-mid{font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:#3a3a3a;}
+        .ft-copy{font-size:.6rem;color:rgba(240,234,216,.15);}
+
+        /* REVEAL */
+        .rev{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);}
+        .rev.on{opacity:1;transform:none;}
+        .rev2{opacity:0;transform:translateY(24px);transition:opacity .9s .15s cubic-bezier(.22,1,.36,1),transform .9s .15s cubic-bezier(.22,1,.36,1);}
+        .rev2.on{opacity:1;transform:none;}
+        .rev3{opacity:0;transform:translateY(24px);transition:opacity .9s .3s cubic-bezier(.22,1,.36,1),transform .9s .3s cubic-bezier(.22,1,.36,1);}
+        .rev3.on{opacity:1;transform:none;}
+
+        /* RESPONSIVE */
+        @media(max-width:960px){
+            #home{align-items:flex-start;}
+            .pendants-wrap{height:250px;}
+            .wire{top:36px;left:8%;right:8%;}
+            .mount{top:30px;}
+            .mount-l{left:7%;}
+            .mount-r{right:7%;}
+            .pendant{top:38px;}
+            .hero-inner{grid-template-columns:1fr;padding-top:158px;gap:34px;}
+            .hero-right{display:flex;order:-1;width:100%;justify-content:center;}
+            .circle-frame{width:min(100%,520px);height:auto;aspect-ratio:16/10;border-radius:8px;}
+            .circle-frame img{object-position:center 62%;}
+            .circle-overlay{border-radius:8px;background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,.08) 58%,rgba(0,0,0,.32));}
+            .circle-ring,.circle-ring2{display:none;}
+            .sp-top{top:12px;right:12px;}
+            .sp-bot{bottom:12px;left:12px;}
+            .srv-grid{grid-template-columns:1fr 1fr;}
+            .book-wrap{grid-template-columns:1fr;}
+            .hrs-mini{grid-template-columns:1fr;}
+        }
+        @media(max-width:640px){
+            .n-links{display:none;}.ham{display:flex;}
+            nav{height:62px;}
+            .n-logo-crop{width:150px;height:40px;}
+            .n-logo-img{transform:translateY(-111px);}
+            .pendants-wrap{height:230px;}
+            .hero-inner{padding:142px 5% 64px;gap:28px;}
+            .circle-frame{width:100%;aspect-ratio:16/9;}
+            .h-ey{font-size:.58rem;letter-spacing:4px;margin-bottom:18px;}
+            .h-title{font-size:clamp(2.85rem,15vw,4.1rem);}
+            .h-more{font-size:clamp(2.25rem,11vw,3rem);margin-bottom:22px;}
+            .h-sub{margin-bottom:30px;}
+            .h-btns{gap:10px;}
+            .h-btns a{width:100%;text-align:center;}
+            .srv-grid{grid-template-columns:1fr;}
+            .book-form{padding:26px 18px;}
+            .frow2{grid-template-columns:1fr;}
+            .foot{flex-direction:column;text-align:center;}
+            .sp-top,.sp-bot{display:none;}
+        }
+    </style>
+</head>
+<body>
+
+<div id="dot"></div>
+<div id="ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+    <a href="#home" class="n-logo" aria-label="Landscape Lighting & More home">
+        <span class="n-logo-crop"><img class="n-logo-img" src="assets/logo.png" alt="Landscape Lighting & More"/></span>
+    </a>
+    <ul class="n-links">
+        <li><a href="#home" class="on">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#book">Book</a></li>
+        <li><a href="#book" class="n-cta">Free Demo</a></li>
+    </ul>
+    <div class="ham" id="ham"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mob" id="mob">
+    <a href="#home" onclick="cM()">Home</a>
+    <a href="#services" onclick="cM()">Services</a>
+    <a href="#book" onclick="cM()">Book</a>
+    <a href="#book" class="m-b" onclick="cM()">Free Demo</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+
+    <!-- PENDANT STRING LIGHTS -->
+    <div class="pendants-wrap" id="pendants">
+        <div class="wire"></div>
+        <div class="mount mount-l"></div>
+        <div class="mount mount-r"></div>
+        <!-- Pendants injected by JS -->
+    </div>
+
+    <div class="gnd"></div>
+    <div id="fp"></div>
+
+    <div class="hero-inner">
+        <!-- LEFT TEXT -->
+        <div class="hero-left">
+            <div class="h-ey">Family Owned · San Diego, CA</div>
+            <h1 class="h-title">
+                <span class="g">Landscape</span><br>Lighting
+            </h1>
+            <p class="h-amp">&amp;</p>
+            <p class="h-more">More</p>
+            <p class="h-sub">Full-service lighting specialists — <strong>new &amp; existing 12V systems,</strong> bistro lights, garden accents. We transform your outdoor space after dark.</p>
+            <div class="h-btns">
+                <a href="#book" class="btn-gold">Book Free Consultation</a>
+                <a href="#services" class="btn-ghost">View Services</a>
+            </div>
+        </div>
+
+        <!-- RIGHT — Circular Photo -->
+        <div class="hero-right">
+            <!-- Outer decorative rings -->
+            <div class="circle-ring"></div>
+            <div class="circle-ring2"></div>
+
+            <!-- Floating stat pills -->
+            <div class="stat-pill sp-top">
+                <span class="sp-val">Free</span>
+                <div class="sp-lbl">Night Demonstration</div>
+            </div>
+            <div class="stat-pill sp-bot">
+                <span class="sp-val">12V</span>
+                <div class="sp-lbl">System Specialists</div>
+            </div>
+
+            <!-- The circular photo frame -->
+            <div class="circle-frame">
+                <img
+                        src="https://images.unsplash.com/photo-1761426202710-8e4a2e8738b7?ixlib=rb-4.1.0&auto=format&fit=crop&w=1100&q=85"
+                        alt="Luxury backyard with landscape lighting"
+                        onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop'"
+                />
+                <div class="circle-overlay"></div>
+                <div class="circle-badge">San Diego Backyards</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scrl"><span>Scroll</span></div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+    <div class="sec-header rev">
+        <div class="sec-tag">What We Offer</div>
+        <h2 class="sec-h">Our <em>Services</em></h2>
+        <p class="sec-p">From brand-new 12V builds to bistro string lights — every project handled with craftsmanship and personal care.</p>
+    </div>
+    <div class="srv-grid">
+        <div class="srv rev">
+            <div class="srv-ico"><div class="srv-glow"></div><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="25" fill="rgba(240,180,41,0.05)"/><path d="M17 25c0-4.42 3.58-8 8-8s8 3.58 8 8c0 2.84-1.48 5.34-3.72 6.8V34a1 1 0 01-1 1h-6.56a1 1 0 01-1-1v-2.2C18.48 30.34 17 27.84 17 25z" fill="#f0b429" opacity=".9"/><rect x="20" y="35.5" width="10" height="2" rx="1" fill="#a07818"/><line x1="25" y1="15" x2="25" y2="12" stroke="#f0b429" stroke-width="1.5" stroke-linecap="round"/><line x1="18" y1="17" x2="16" y2="15" stroke="#f0b429" stroke-width="1.5" stroke-linecap="round"/><line x1="32" y1="17" x2="34" y2="15" stroke="#f0b429" stroke-width="1.5" stroke-linecap="round"/><circle cx="25" cy="25" r="2.3" fill="rgba(255,255,255,0.55)"/></svg></div>
+            <h3 class="srv-name">New 12V Installation</h3>
+            <p class="srv-desc">Complete design &amp; install of low-voltage landscape lighting systems, custom to your property.</p>
+            <span class="srv-more">Learn more <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h6M5 2l3 3-3 3"/></svg></span>
+        </div>
+        <div class="srv rev2">
+            <div class="srv-ico"><div class="srv-glow"></div><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="25" fill="rgba(240,180,41,0.05)"/><path d="M15 27l4-8h7l-3 5h6l-8 12 2-9z" fill="#f0b429" opacity=".9"/><circle cx="36" cy="19" r="4" fill="rgba(240,180,41,0.2)" stroke="#f0b429" stroke-width="1.5"/><path d="M34 19l1.5 1.5L38 17" stroke="#f0b429" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="srv-name">Existing System Service</h3>
+            <p class="srv-desc">Repair and upgrade old or failing 12V systems — diagnosing issues and restoring full performance.</p>
+            <span class="srv-more">Learn more <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h6M5 2l3 3-3 3"/></svg></span>
+        </div>
+        <div class="srv rev3">
+            <div class="srv-ico"><div class="srv-glow"></div><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="25" fill="rgba(240,180,41,0.05)"/><line x1="11" y1="19" x2="39" y2="19" stroke="#f0b429" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="17" cy="19" r="3" fill="#f0b429" opacity=".9"/><circle cx="25" cy="19" r="3" fill="#f0b429" opacity=".9"/><circle cx="33" cy="19" r="3" fill="#f0b429" opacity=".9"/><ellipse cx="17" cy="27" rx="2.5" ry="3.5" fill="#f0b429" opacity=".65"/><ellipse cx="25" cy="27" rx="2.5" ry="3.5" fill="#f0b429" opacity=".65"/><ellipse cx="33" cy="27" rx="2.5" ry="3.5" fill="#f0b429" opacity=".65"/></svg></div>
+            <h3 class="srv-name">Bistro &amp; String Lights</h3>
+            <p class="srv-desc">Warm atmospheric string lights for patios, pergolas &amp; backyard entertaining spaces.</p>
+            <span class="srv-more">Learn more <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h6M5 2l3 3-3 3"/></svg></span>
+        </div>
+        <div class="srv rev" style="position:relative;">
+            <span class="free-badge">Free</span>
+            <div class="srv-ico"><div class="srv-glow"></div><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="25" fill="rgba(240,180,41,0.09)"/><path d="M25 13c0 6.63-5.37 12-12 12 1.74 5.39 6.8 9.28 12.83 9.28 6.89 0 12.17-5.28 12.17-11.78 0-.52-.03-1.04-.1-1.54A12 12 0 0125 13z" fill="#f0b429" opacity=".9"/><circle cx="33" cy="17" r="2" fill="rgba(255,255,255,0.7)"/></svg></div>
+            <h3 class="srv-name">Night Demonstration</h3>
+            <p class="srv-desc">We come to your property at night and set up a free demo — see the full effect before you commit.</p>
+            <span class="srv-more">Learn more <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h6M5 2l3 3-3 3"/></svg></span>
+        </div>
+        <div class="srv rev2">
+            <div class="srv-ico"><div class="srv-glow"></div><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="25" fill="rgba(240,180,41,0.05)"/><polygon points="25,11 33,27 17,27" fill="#f0b429" opacity=".9"/><rect x="23" y="27" width="4" height="7" fill="#a07818"/><ellipse cx="25" cy="35" rx="6" ry="1.5" fill="rgba(240,180,41,0.2)"/><path d="M13 32 Q16 26 20 29" stroke="#f0b429" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M29 29 Q33 23 37 29" stroke="#f0b429" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg></div>
+            <h3 class="srv-name">Garden &amp; Tree Uplighting</h3>
+            <p class="srv-desc">Dramatic uplighting for trees, palms &amp; architectural features to transform your night landscape.</p>
+            <span class="srv-more">Learn more <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h6M5 2l3 3-3 3"/></svg></span>
+        </div>
+        <div class="srv rev3">
+            <div class="srv-ico"><div class="srv-glow"></div><svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="25" fill="rgba(240,180,41,0.05)"/><path d="M17 39 Q21 26 25 21 Q29 26 33 39" stroke="rgba(240,180,41,0.25)" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="19" cy="36" r="2.2" fill="#f0b429" opacity=".9"/><circle cx="22" cy="30" r="2.2" fill="#f0b429" opacity=".9"/><circle cx="25" cy="24" r="2.2" fill="#f0b429" opacity=".9"/><circle cx="28" cy="30" r="2.2" fill="#f0b429" opacity=".9"/><circle cx="31" cy="36" r="2.2" fill="#f0b429" opacity=".9"/></svg></div>
+            <h3 class="srv-name">Pathway &amp; Step Lighting</h3>
+            <p class="srv-desc">Safe, elegant path lighting for walkways, driveways &amp; steps — style and security in one.</p>
+            <span class="srv-more">Learn more <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h6M5 2l3 3-3 3"/></svg></span>
+        </div>
+    </div>
+    <div class="srv-cta-bar rev">
+        <a href="#book" class="btn-gold">Book a Free Consultation</a>
+        <a href="tel:6197611308" class="btn-ghost">Call (619) 761-1308</a>
+    </div>
+</section>
+
+<!-- BOOK -->
+<section id="book">
+    <div class="book-wrap">
+        <div class="book-left rev">
+            <div class="sec-tag" style="justify-content:flex-start;"><span style="font-size:.6rem;letter-spacing:5px;text-transform:uppercase;color:#f0b429;font-weight:300;">Book a Visit</span></div>
+            <h2 class="sec-h" style="text-align:left;margin-bottom:16px;">Schedule Your<br><em>Consultation</em></h2>
+            <div style="width:1px;height:52px;background:linear-gradient(to bottom,#f0b429,transparent);margin-bottom:32px;"></div>
+            <p>Book a free consultation and let's talk about bringing your outdoor space to life. We'll walk your property, discuss options, and set up a free night demonstration right then and there.</p>
+            <div class="hrs-mini">
+                <div class="hr"><span class="d">Monday</span><span class="t">9 AM–5 PM</span></div>
+                <div class="hr"><span class="d">Tuesday</span><span class="t">8 AM–5 PM</span></div>
+                <div class="hr"><span class="d">Wednesday</span><span class="t">8 AM–5 PM</span></div>
+                <div class="hr"><span class="d">Thursday</span><span class="t">8 AM–5 PM</span></div>
+                <div class="hr"><span class="d">Friday</span><span class="t">8 AM–5 PM</span></div>
+                <div class="hr"><span class="d">Saturday</span><span class="t">8 AM–5 PM</span></div>
+                <div class="hr cls"><span class="d">Sunday</span><span class="t">Closed</span></div>
+            </div>
+            <div class="contact-rows">
+                <div class="c-row"><div class="c-ico"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div><a href="tel:6197611308">(619) 761-1308</a></div>
+                <div class="c-row"><div class="c-ico"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/></svg></div><a href="https://landscapelightingandmore.net" target="_blank">landscapelightingandmore.net</a></div>
+                <div class="c-row"><div class="c-ico"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><span>422 E 6th St, National City, CA 91950</span></div>
+            </div>
+        </div>
+        <div class="book-form rev2">
+            <h3 class="fh">Request a Consultation</h3>
+            <div id="ff">
+                <div class="frow2">
+                    <div class="fg"><label class="fl">First Name</label><input type="text" class="fi" id="fn" placeholder="John"/></div>
+                    <div class="fg"><label class="fl">Last Name</label><input type="text" class="fi" id="ln" placeholder="Smith"/></div>
+                </div>
+                <div class="fg"><label class="fl">Phone</label><input type="tel" class="fi" id="ph" placeholder="(619) 000-0000"/></div>
+                <div class="fg"><label class="fl">Email</label><input type="email" class="fi" id="em" placeholder="you@email.com"/></div>
+                <div class="fg"><label class="fl">Service</label>
+                    <select class="fsel" id="sv">
+                        <option value="">Select a service...</option>
+                        <option>New 12V System Installation</option>
+                        <option>Existing 12V System Repair/Upgrade</option>
+                        <option>Bistro &amp; String Lights</option>
+                        <option>Garden &amp; Tree Uplighting</option>
+                        <option>Pathway &amp; Step Lighting</option>
+                        <option>Free Night Demonstration</option>
+                        <option>General Consultation</option>
+                    </select>
+                </div>
+                <div class="fg"><label class="fl">Preferred Date</label><input type="date" class="fi" id="dt"/></div>
+                <div class="fg"><label class="fl">About Your Project</label><textarea class="fta" id="mg" placeholder="Property type, existing lighting, goals..."></textarea></div>
+                <button class="fsub" onclick="subF()">Request Consultation →</button>
+            </div>
+            <div class="f-ok" id="fok">
+                <svg viewBox="0 0 60 60" width="60" height="60" fill="none" style="margin:0 auto;display:block;"><circle cx="30" cy="30" r="29" stroke="#f0b429" stroke-width="1"/><path d="M18 30l9 9 15-18" stroke="#f0b429" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p>We'll be in touch within 24 hours to confirm your consultation.</p>
+                <small>(619) 761-1308 · landscapelightingandmore.net</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="foot">
+        <div class="ft-logo">Landscape <em>Lighting</em> &amp; More</div>
+        <div class="ft-mid">Family Owned · San Diego · National City, CA</div>
+        <div class="ft-copy">© 2024 Landscape Lighting &amp; More · (619) 761-1308</div>
+    </div>
+</footer>
+
+<script>
+    /* CURSOR */
+    const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+    let mx=0,my=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+    setInterval(()=>{ring.style.left=mx+'px';ring.style.top=my+'px';},55);
+
+    /* NAV */
+    window.addEventListener('scroll',()=>{
+        const s=['home','services','book'];let c='';
+        s.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-100)c=id;});
+        document.querySelectorAll('.n-links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+c));
+    });
+    const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+    ham.addEventListener('click',()=>{ham.classList.toggle('o');mob.classList.toggle('o');document.body.style.overflow=mob.classList.contains('o')?'hidden':'';});
+    function cM(){ham.classList.remove('o');mob.classList.remove('o');document.body.style.overflow='';}
+
+    /* ── BUILD PENDANT LIGHTS ── */
+    (function(){
+        const wrap = document.getElementById('pendants');
+        const vw = window.innerWidth;
+
+        // Number of pendants based on viewport
+        const count = vw < 640 ? 3 : vw < 960 ? 4 : Math.min(7, Math.max(5, Math.round(vw / 260)));
+
+        for(let i = 0; i < count; i++){
+            const pct = ((i + 1) / (count + 1)) * 100;
+
+            // Random slight variation for each bulb
+            const cordH  = 64 + Math.random() * 30;  // cord length varies
+            const swayDur = 3.5 + Math.random() * 2.5;
+            const swayDel = Math.random() * 3;
+            const bright  = 0.82 + Math.random() * 0.16;
+            const scale   = 0.82 + Math.random() * 0.18;
+
+            const div = document.createElement('div');
+            div.className = 'pendant';
+            div.style.cssText = `
+      left:${pct}%;
+      animation-duration:${swayDur}s;
+      animation-delay:${swayDel}s;
+      opacity:${bright};
+      transform:scale(${scale});
+    `;
+
+            div.innerHTML = `
+      <!-- Outer ambient glow -->
+      <div class="p-glow"></div>
+
+      <!-- Drop cord -->
+      <div class="p-cord" style="height:${cordH}px;"></div>
+
+      <!-- Socket cap -->
+      <div class="p-cap"></div>
+
+      <!-- Bulb body -->
+      <div class="p-bulb">
+        <div class="p-bulb-inner"></div>
+        <div class="p-bulb-shine"></div>
+        <div class="p-bulb-fil"></div>
+      </div>
+
+      <!-- Floor cast light -->
+      <div class="p-floor"></div>
+    `;
+
+            wrap.appendChild(div);
+        }
+
+        // Flicker effect — randomly dim individual bulbs
+        const allBulbs = document.querySelectorAll('.p-bulb');
+        function flicker(){
+            const b = allBulbs[Math.floor(Math.random() * allBulbs.length)];
+            const orig = b.style.opacity || '1';
+            b.style.opacity = '0.25';
+            setTimeout(()=>b.style.opacity='0.8',70);
+            setTimeout(()=>b.style.opacity='0.4',140);
+            setTimeout(()=>b.style.opacity='1',210);
+            setTimeout(flicker, 600 + Math.random() * 2800);
+        }
+        setTimeout(flicker, 1200);
+    })();
+
+    /* FLOATING PARTICLES */
+    const fp=document.getElementById('fp');
+    for(let i=0;i<20;i++){
+        const p=document.createElement('div');p.className='fp';
+        p.style.cssText=`position:absolute;left:${10+Math.random()*80}%;bottom:${5+Math.random()*30}%;animation-duration:${10+Math.random()*14}s;animation-delay:${Math.random()*12}s;`;
+        fp.appendChild(p);
+    }
+
+    /* REVEAL */
+    const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.08});
+    document.querySelectorAll('.rev,.rev2,.rev3').forEach(el=>obs.observe(el));
+
+    /* FORM */
+    function subF(){
+        if(!document.getElementById('fn').value.trim()||!document.getElementById('ph').value.trim()){alert('Please enter your name and phone number.');return;}
+        document.getElementById('ff').style.display='none';
+        document.getElementById('fok').style.display='block';
+    }
+</script>
+</body>
+</html>
