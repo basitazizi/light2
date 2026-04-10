@@ -17,10 +17,9 @@
 
         /* ── NAV ── */
         nav{position:fixed;top:0;left:0;right:0;z-index:100;height:66px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(240,180,41,.08);}
-        .n-logo{display:flex;align-items:center;text-decoration:none;}
-        .n-logo-crop{width:174px;max-width:48vw;height:46px;display:block;overflow:hidden;position:relative;}
-        .n-logo-img{width:100%;height:auto;display:block;transform:translateY(-128px);}
-        .n-logo svg{width:30px;height:30px;}
+        .n-logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+        .n-logo-mark{width:34px;height:34px;display:block;overflow:hidden;position:relative;flex:0 0 34px;}
+        .n-logo-mark img{position:absolute;width:74px;height:74px;max-width:none;left:50%;top:48%;transform:translate(-50%,-50%);object-fit:contain;}
         .n-logo-txt{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:400;line-height:1.15;color:#f0ead8;}
         .n-logo-txt span{display:block;font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:3.5px;text-transform:uppercase;color:#f0b429;font-weight:300;margin-top:1px;}
         .n-links{display:flex;gap:36px;list-style:none;align-items:center;}
@@ -31,16 +30,6 @@
         .n-cta{border:1px solid rgba(240,180,41,.4);color:#f0b429!important;padding:7px 20px!important;}
         .n-cta::after{display:none!important;}
         .n-cta:hover{background:#f0b429!important;color:#000!important;}
-        .ham{display:none;flex-direction:column;gap:5px;cursor:none;}
-        .ham span{display:block;width:20px;height:1px;background:#f0ead8;transition:all .3s;}
-        .ham.o span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
-        .ham.o span:nth-child(2){opacity:0;}
-        .ham.o span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
-        .mob{display:none;position:fixed;inset:0;background:#000;z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:40px;}
-        .mob.o{display:flex;}
-        .mob a{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:rgba(240,234,216,.6);text-decoration:none;transition:color .3s;}
-        .mob a:hover{color:#f0b429;}
-        .mob .m-b{font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:3px;text-transform:uppercase;background:#f0b429;color:#000;padding:13px 40px;}
 
         /* ════════════════════
            HERO
@@ -56,14 +45,14 @@
         .pendants-wrap{
             position:absolute;
             top:0;left:0;right:0;
-            height:280px;
+            height:260px;
             pointer-events:none;
             z-index:2;
         }
         /* The horizontal wire */
         .wire{
             position:absolute;
-            top:40px;left:6%;right:6%;
+            top:42px;left:-2%;right:-2%;
             height:1.5px;
             background:linear-gradient(to right,
             transparent 0%,
@@ -78,20 +67,20 @@
         /* Wall mounts at ends */
         .mount{
             position:absolute;
-            top:34px;
+            top:36px;
             width:14px;height:14px;
             border:1px solid rgba(200,160,60,.5);
             border-radius:50%;
             background:#0a0800;
         }
         .mount::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:rgba(240,180,41,.4);}
-        .mount-l{left:5%;}
-        .mount-r{right:5%;}
+        .mount-l{left:1%;}
+        .mount-r{right:1%;}
 
         /* Each pendant bulb */
         .pendant{
             position:absolute;
-            top:42px;
+            top:44px;
             display:flex;flex-direction:column;align-items:center;
             animation:sway 4s ease-in-out infinite;
             transform-origin:top center;
@@ -104,68 +93,80 @@
         }
 
         /* Drop cord */
-        .p-cord{width:1.5px;height:68px;background:linear-gradient(to bottom,rgba(200,170,80,.7),rgba(200,170,80,.4));}
+        .p-cord{
+            position:relative;
+            width:2px;height:56px;
+            background:linear-gradient(to bottom,rgba(220,195,105,.7),rgba(200,180,80,.3));
+            box-shadow:0 0 4px rgba(240,180,41,.18);
+        }
+        .p-cord::after{
+            content:'';
+            position:absolute;
+            top:0;bottom:0;left:3px;
+            width:1px;
+            background:linear-gradient(to bottom,rgba(220,195,105,.42),rgba(200,180,80,.14));
+        }
 
         /* Bulb socket cap */
-        .p-cap{width:18px;height:8px;background:linear-gradient(to bottom,#2a1e00,#1a1200);border-radius:3px 3px 0 0;border:1px solid rgba(180,140,40,.3);}
+        .p-cap{width:10px;height:5px;background:linear-gradient(to bottom,#1e1600,#111000);border-radius:2px 2px 0 0;border:1px solid rgba(200,170,60,.18);}
 
-        /* Bulb glass body — Edison pendant teardrop */
+        /* Bulb glass body — small pendant */
         .p-bulb{
-            width:38px;height:52px;
-            border-radius:50% 50% 45% 45% / 40% 40% 55% 55%;
+            width:16px;height:24px;
+            border-radius:50% 50% 42% 42% / 38% 38% 52% 52%;
             position:relative;
             overflow:visible;
         }
         .p-bulb-inner{
             position:absolute;inset:0;
             border-radius:inherit;
-            background:radial-gradient(ellipse 60% 55% at 38% 35%,
-            rgba(255,255,220,.95) 0%,
-            rgba(255,230,120,.85) 25%,
-            rgba(240,180,40,.75) 55%,
-            rgba(200,130,20,.6) 80%,
-            rgba(160,100,10,.4) 100%
+            background:radial-gradient(ellipse 60% 55% at 38% 32%,
+            rgba(255,255,200,.98) 0%,
+            rgba(255,245,100,.92) 22%,
+            rgba(255,215,20,.82) 50%,
+            rgba(230,185,10,.5) 78%,
+            rgba(180,140,10,.25) 100%
             );
-            border:1px solid rgba(240,180,41,.35);
+            border:1px solid rgba(255,230,40,.2);
         }
         /* Glass highlight */
         .p-bulb-shine{
             position:absolute;
-            top:8px;left:7px;
-            width:10px;height:16px;
+            top:3px;left:3px;
+            width:4px;height:7px;
             border-radius:50%;
-            background:rgba(255,255,255,.28);
+            background:rgba(255,255,255,.38);
             transform:rotate(-15deg);
         }
-        /* Filament glow inside */
+        /* Filament */
         .p-bulb-fil{
             position:absolute;
-            bottom:14px;left:50%;
+            bottom:6px;left:50%;
             transform:translateX(-50%);
-            width:18px;height:10px;
-            border-bottom:1.5px solid rgba(255,255,200,.6);
+            width:8px;height:4px;
+            border-bottom:1px solid rgba(255,255,160,.5);
             border-radius:0 0 50% 50%;
         }
 
-        /* Outer glow halo */
+        /* Outer glow halo — soft yellow */
         .p-glow{
             position:absolute;
             top:50%;left:50%;
             transform:translate(-50%,-50%);
-            width:100px;height:100px;
+            width:50px;height:50px;
             border-radius:50%;
-            background:radial-gradient(circle,rgba(240,180,41,.22) 0%,rgba(240,180,41,.08) 40%,transparent 70%);
+            background:radial-gradient(circle,rgba(255,230,30,.16) 0%,rgba(255,220,20,.05) 45%,transparent 70%);
             pointer-events:none;
             z-index:-1;
         }
-        /* Floor light cast from pendants */
+        /* Floor cast */
         .p-floor{
             position:absolute;
-            bottom:-80px;left:50%;
+            bottom:-55px;left:50%;
             transform:translateX(-50%);
-            width:80px;height:30px;
+            width:36px;height:16px;
             border-radius:50%;
-            background:radial-gradient(ellipse,rgba(240,180,41,.12) 0%,transparent 70%);
+            background:radial-gradient(ellipse,rgba(255,220,30,.08) 0%,transparent 70%);
         }
 
         /* Ground ambient */
@@ -182,18 +183,17 @@
         /* ── HERO CONTENT ── */
         .hero-inner{
             position:relative;z-index:10;
-            max-width:1240px;margin:0 auto;width:100%;
-            padding:120px 5% 60px;
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            align-items:center;
-            gap:60px;
+            max-width:700px;margin:0 auto;width:100%;
+            padding:130px 5% 80px;
+            display:flex;
+            flex-direction:column;
+            align-items:flex-start;
         }
         .hero-left{opacity:0;animation:hL 1.2s .3s cubic-bezier(.22,1,.36,1) forwards;}
         @keyframes hL{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
         .h-ey{font-size:.62rem;letter-spacing:5px;text-transform:uppercase;color:#f0b429;font-weight:300;display:flex;align-items:center;gap:10px;margin-bottom:24px;}
         .h-ey::before{content:'';width:32px;height:1px;background:#f0b429;}
-        .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.4rem,6vw,5.6rem);font-weight:300;line-height:.94;letter-spacing:0;margin-bottom:6px;}
+        .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.4rem,6vw,5.6rem);font-weight:300;line-height:.94;letter-spacing:-1px;margin-bottom:6px;}
         .h-title .g{color:#f0b429;font-style:italic;}
         .h-amp{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:300;font-style:italic;color:rgba(240,234,216,.28);margin-bottom:4px;}
         .h-more{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,4.5vw,3.8rem);font-weight:300;color:rgba(240,234,216,.82);margin-bottom:28px;}
@@ -376,44 +376,31 @@
 
         /* RESPONSIVE */
         @media(max-width:960px){
-            #home{align-items:flex-start;}
-            .pendants-wrap{height:250px;}
-            .wire{top:36px;left:8%;right:8%;}
-            .mount{top:30px;}
-            .mount-l{left:7%;}
-            .mount-r{right:7%;}
-            .pendant{top:38px;}
-            .hero-inner{grid-template-columns:1fr;padding-top:158px;gap:34px;}
-            .hero-right{display:flex;order:-1;width:100%;justify-content:center;}
-            .circle-frame{width:min(100%,520px);height:auto;aspect-ratio:16/10;border-radius:8px;}
-            .circle-frame img{object-position:center 62%;}
-            .circle-overlay{border-radius:8px;background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,.08) 58%,rgba(0,0,0,.32));}
-            .circle-ring,.circle-ring2{display:none;}
-            .sp-top{top:12px;right:12px;}
-            .sp-bot{bottom:12px;left:12px;}
             .srv-grid{grid-template-columns:1fr 1fr;}
             .book-wrap{grid-template-columns:1fr;}
             .hrs-mini{grid-template-columns:1fr;}
         }
         @media(max-width:640px){
-            .n-links{display:none;}.ham{display:flex;}
-            nav{height:62px;}
-            .n-logo-crop{width:150px;height:40px;}
-            .n-logo-img{transform:translateY(-111px);}
-            .pendants-wrap{height:230px;}
-            .hero-inner{padding:142px 5% 64px;gap:28px;}
-            .circle-frame{width:100%;aspect-ratio:16/9;}
-            .h-ey{font-size:.58rem;letter-spacing:4px;margin-bottom:18px;}
-            .h-title{font-size:clamp(2.85rem,15vw,4.1rem);}
-            .h-more{font-size:clamp(2.25rem,11vw,3rem);margin-bottom:22px;}
-            .h-sub{margin-bottom:30px;}
-            .h-btns{gap:10px;}
-            .h-btns a{width:100%;text-align:center;}
+            nav{height:78px;padding:8px 10px;flex-wrap:wrap;align-content:center;gap:6px 0;}
+            .n-logo{width:100%;gap:6px;justify-content:center;}
+            .n-logo-mark{width:26px;height:26px;flex-basis:26px;}
+            .n-logo-mark img{width:58px;height:58px;}
+            .n-logo-txt{font-size:.72rem;white-space:nowrap;}
+            .n-logo-txt span{display:none;}
+            .n-links{display:grid;width:310px;max-width:100%;min-width:0;flex:0 1 310px;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;align-items:center;}
+            .n-links li{text-align:center;min-width:0;}
+            .n-links a{display:inline-flex;width:100%;align-items:center;justify-content:center;font-size:.56rem;letter-spacing:1px;white-space:nowrap;}
+            .n-cta{padding:4px 8px!important;}
+            #home{padding-top:78px;}
+            .hero-inner{padding:110px 5% 60px;}
+            .h-title{font-size:clamp(3rem,11vw,4.5rem);}
+            .h-more{font-size:clamp(2.2rem,8vw,3.2rem);}
             .srv-grid{grid-template-columns:1fr;}
             .book-form{padding:26px 18px;}
             .frow2{grid-template-columns:1fr;}
             .foot{flex-direction:column;text-align:center;}
-            .sp-top,.sp-bot{display:none;}
+            .h-btns{flex-direction:column;align-items:flex-start;}
+            .btn-gold,.btn-ghost{width:100%;text-align:center;}
         }
     </style>
 </head>
@@ -424,8 +411,9 @@
 
 <!-- NAV -->
 <nav id="nav">
-    <a href="#home" class="n-logo" aria-label="Landscape Lighting & More home">
-        <span class="n-logo-crop"><img class="n-logo-img" src="assets/logo.png" alt="Landscape Lighting & More"/></span>
+    <a href="#home" class="n-logo">
+        <span class="n-logo-mark"><img src="assets/logo.png" alt="Landscape Lighting &amp; More logo"/></span>
+        <div class="n-logo-txt">Landscape Lighting<span>& More · San Diego</span></div>
     </a>
     <ul class="n-links">
         <li><a href="#home" class="on">Home</a></li>
@@ -433,15 +421,7 @@
         <li><a href="#book">Book</a></li>
         <li><a href="#book" class="n-cta">Free Demo</a></li>
     </ul>
-    <div class="ham" id="ham"><span></span><span></span><span></span></div>
 </nav>
-
-<div class="mob" id="mob">
-    <a href="#home" onclick="cM()">Home</a>
-    <a href="#services" onclick="cM()">Services</a>
-    <a href="#book" onclick="cM()">Book</a>
-    <a href="#book" class="m-b" onclick="cM()">Free Demo</a>
-</div>
 
 <!-- HERO -->
 <section id="home">
@@ -470,34 +450,6 @@
             <div class="h-btns">
                 <a href="#book" class="btn-gold">Book Free Consultation</a>
                 <a href="#services" class="btn-ghost">View Services</a>
-            </div>
-        </div>
-
-        <!-- RIGHT — Circular Photo -->
-        <div class="hero-right">
-            <!-- Outer decorative rings -->
-            <div class="circle-ring"></div>
-            <div class="circle-ring2"></div>
-
-            <!-- Floating stat pills -->
-            <div class="stat-pill sp-top">
-                <span class="sp-val">Free</span>
-                <div class="sp-lbl">Night Demonstration</div>
-            </div>
-            <div class="stat-pill sp-bot">
-                <span class="sp-val">12V</span>
-                <div class="sp-lbl">System Specialists</div>
-            </div>
-
-            <!-- The circular photo frame -->
-            <div class="circle-frame">
-                <img
-                        src="https://images.unsplash.com/photo-1761426202710-8e4a2e8738b7?ixlib=rb-4.1.0&auto=format&fit=crop&w=1100&q=85"
-                        alt="Luxury backyard with landscape lighting"
-                        onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop'"
-                />
-                <div class="circle-overlay"></div>
-                <div class="circle-badge">San Diego Backyards</div>
             </div>
         </div>
     </div>
@@ -635,27 +587,19 @@
         s.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-100)c=id;});
         document.querySelectorAll('.n-links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+c));
     });
-    const ham=document.getElementById('ham'),mob=document.getElementById('mob');
-    ham.addEventListener('click',()=>{ham.classList.toggle('o');mob.classList.toggle('o');document.body.style.overflow=mob.classList.contains('o')?'hidden':'';});
-    function cM(){ham.classList.remove('o');mob.classList.remove('o');document.body.style.overflow='';}
-
-    /* ── BUILD PENDANT LIGHTS ── */
+    /* ── BUILD PENDANT LIGHTS — always exactly 8 ── */
     (function(){
         const wrap = document.getElementById('pendants');
-        const vw = window.innerWidth;
+        const COUNT = 8;
 
-        // Number of pendants based on viewport
-        const count = vw < 640 ? 3 : vw < 960 ? 4 : Math.min(7, Math.max(5, Math.round(vw / 260)));
+        for(let i = 0; i < COUNT; i++){
+            // evenly space from 6% to 94%
+            const pct = 6 + (i / (COUNT - 1)) * 88;
 
-        for(let i = 0; i < count; i++){
-            const pct = ((i + 1) / (count + 1)) * 100;
-
-            // Random slight variation for each bulb
-            const cordH  = 64 + Math.random() * 30;  // cord length varies
-            const swayDur = 3.5 + Math.random() * 2.5;
-            const swayDel = Math.random() * 3;
-            const bright  = 0.82 + Math.random() * 0.16;
-            const scale   = 0.82 + Math.random() * 0.18;
+            const cordH   = 52 + Math.random() * 22;
+            const swayDur = 3.8 + Math.random() * 2.2;
+            const swayDel = Math.random() * 2.5;
+            const bright  = 0.82 + Math.random() * 0.18;
 
             const div = document.createElement('div');
             div.className = 'pendant';
@@ -664,45 +608,34 @@
       animation-duration:${swayDur}s;
       animation-delay:${swayDel}s;
       opacity:${bright};
-      transform:scale(${scale});
     `;
 
             div.innerHTML = `
-      <!-- Outer ambient glow -->
       <div class="p-glow"></div>
-
-      <!-- Drop cord -->
       <div class="p-cord" style="height:${cordH}px;"></div>
-
-      <!-- Socket cap -->
       <div class="p-cap"></div>
-
-      <!-- Bulb body -->
       <div class="p-bulb">
         <div class="p-bulb-inner"></div>
         <div class="p-bulb-shine"></div>
         <div class="p-bulb-fil"></div>
       </div>
-
-      <!-- Floor cast light -->
       <div class="p-floor"></div>
     `;
 
             wrap.appendChild(div);
         }
 
-        // Flicker effect — randomly dim individual bulbs
+        // Subtle flicker
         const allBulbs = document.querySelectorAll('.p-bulb');
         function flicker(){
             const b = allBulbs[Math.floor(Math.random() * allBulbs.length)];
-            const orig = b.style.opacity || '1';
-            b.style.opacity = '0.25';
-            setTimeout(()=>b.style.opacity='0.8',70);
-            setTimeout(()=>b.style.opacity='0.4',140);
-            setTimeout(()=>b.style.opacity='1',210);
-            setTimeout(flicker, 600 + Math.random() * 2800);
+            b.style.opacity = '0.2';
+            setTimeout(()=>b.style.opacity='0.85', 60);
+            setTimeout(()=>b.style.opacity='0.5',  120);
+            setTimeout(()=>b.style.opacity='1',    190);
+            setTimeout(flicker, 700 + Math.random() * 3000);
         }
-        setTimeout(flicker, 1200);
+        setTimeout(flicker, 1400);
     })();
 
     /* FLOATING PARTICLES */
