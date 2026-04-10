@@ -381,18 +381,19 @@
             .hrs-mini{grid-template-columns:1fr;}
         }
         @media(max-width:640px){
-            nav{height:78px;padding:8px 10px;flex-wrap:wrap;align-content:center;gap:6px 0;}
-            .n-logo{width:100%;gap:6px;justify-content:center;}
-            .n-logo-mark{width:26px;height:26px;flex-basis:26px;}
-            .n-logo-mark img{width:58px;height:58px;}
-            .n-logo-txt{font-size:.72rem;white-space:nowrap;}
+            nav{height:58px;padding:0 6px;flex-wrap:nowrap;justify-content:flex-start;gap:6px;}
+            .n-logo{width:auto;gap:4px;justify-content:flex-start;flex:0 0 72px;min-width:0;}
+            .n-logo-mark{width:20px;height:20px;flex-basis:20px;}
+            .n-logo-mark img{width:46px;height:46px;}
+            .n-logo-txt{font-size:.5rem;white-space:nowrap;overflow:hidden;text-overflow:clip;}
             .n-logo-txt span{display:none;}
-            .n-links{display:grid;width:310px;max-width:100%;min-width:0;flex:0 1 310px;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;align-items:center;}
+            .n-links{display:grid;width:210px;max-width:none;min-width:0;flex:0 0 210px;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;align-items:center;}
             .n-links li{text-align:center;min-width:0;}
-            .n-links a{display:inline-flex;width:100%;align-items:center;justify-content:center;font-size:.56rem;letter-spacing:1px;white-space:nowrap;}
-            .n-cta{padding:4px 8px!important;}
-            #home{padding-top:78px;}
-            .hero-inner{padding:110px 5% 60px;}
+            .n-links a{display:inline-flex;width:100%;min-width:0;align-items:center;justify-content:center;font-size:.48rem;letter-spacing:.45px;white-space:nowrap;}
+            .n-cta{padding:4px 3px!important;font-size:0!important;}
+            .n-links .n-cta::before{content:'Demo';display:inline;color:#f0b429;font-size:.48rem;letter-spacing:.45px;}
+            #home{padding-top:58px;}
+            .hero-inner{padding:100px 5% 60px;}
             .h-title{font-size:clamp(3rem,11vw,4.5rem);}
             .h-more{font-size:clamp(2.2rem,8vw,3.2rem);}
             .srv-grid{grid-template-columns:1fr;}
