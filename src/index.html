@@ -31,6 +31,23 @@
         .n-cta{border:1px solid rgba(240,180,41,.4);color:#f0b429!important;padding:0 18px!important;min-width:120px;}
         .n-cta::after{display:none!important;}
         .n-cta:hover{background:#f0b429!important;color:#000!important;}
+        .n-menu-btn{display:none;align-items:center;gap:10px;height:44px;padding:0 14px;border:1px solid rgba(240,180,41,.28);background:rgba(14,10,2,.74);color:#f0ead8;font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;cursor:none;}
+        .n-menu-btn .bars{display:flex;flex-direction:column;gap:4px;}
+        .n-menu-btn .bars span{display:block;width:16px;height:1px;background:#f0b429;transition:transform .25s,opacity .25s;}
+        .n-menu-btn.o .bars span:nth-child(1){transform:translateY(5px) rotate(45deg);}
+        .n-menu-btn.o .bars span:nth-child(2){opacity:0;}
+        .n-menu-btn.o .bars span:nth-child(3){transform:translateY(-5px) rotate(-45deg);}
+        .m-menu{display:none;position:absolute;top:calc(100% + 10px);right:12px;width:min(280px,calc(100vw - 24px));padding:16px;border:1px solid rgba(240,180,41,.2);background:rgba(5,4,1,.96);backdrop-filter:blur(18px);box-shadow:0 22px 40px rgba(0,0,0,.48);}
+        .m-menu.o{display:block;}
+        .m-menu-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid rgba(240,180,41,.12);}
+        .m-menu-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#f0ead8;line-height:1;}
+        .m-menu-copy{font-size:.56rem;letter-spacing:2.8px;text-transform:uppercase;color:#f0b429;margin-top:6px;}
+        .m-menu-list{display:grid;gap:10px;list-style:none;}
+        .m-menu-list a{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border:1px solid rgba(240,180,41,.12);background:rgba(19,15,5,.58);color:#d3cbb8;text-decoration:none;font-size:.74rem;letter-spacing:1.2px;text-transform:uppercase;transition:border-color .25s,background .25s,color .25s;}
+        .m-menu-list a span{font-family:'Cormorant Garamond',serif;font-size:1rem;letter-spacing:0;text-transform:none;color:#f0ead8;}
+        .m-menu-list a strong{font-weight:400;color:#f0b429;}
+        .m-menu-list a:hover,.m-menu-list a.on{border-color:rgba(240,180,41,.42);background:rgba(35,26,7,.84);color:#f0ead8;}
+        .m-menu-list a:hover span,.m-menu-list a.on span{color:#fff5d3;}
 
         /* ════════════════════
            HERO
@@ -458,28 +475,17 @@
             .hrs-mini{grid-template-columns:1fr;}
         }
         @media(max-width:640px){
-            nav{height:76px;padding:0 14px 0 12px;flex-wrap:nowrap;justify-content:flex-start;gap:10px;}
-            .n-logo{gap:6px;justify-content:flex-start;flex:0 1 auto;max-width:112px;}
-            .n-logo-mark{width:28px;height:28px;flex-basis:28px;}
-            .n-logo-mark img{width:60px;height:60px;top:54%;}
-            .n-logo-txt{font-size:.62rem;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+            nav{height:76px;padding:0 12px;flex-wrap:nowrap;justify-content:flex-start;gap:10px;}
+            .n-logo{gap:8px;justify-content:flex-start;flex:0 1 auto;max-width:calc(100% - 88px);}
+            .n-logo-mark{width:34px;height:34px;flex-basis:34px;}
+            .n-logo-mark img{width:74px;height:74px;top:54%;}
+            .n-logo-txt{font-size:.78rem;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
             .n-logo-txt span{display:none;}
-            .n-links{display:flex;position:absolute;right:10px;top:50%;transform:translateY(-50%);width:136px;max-width:136px;min-width:136px;gap:4px;align-items:center;justify-content:space-between;}
-            .n-links li{text-align:center;min-width:0;flex:0 0 auto;}
-            .n-links li:nth-child(1){width:28px;}
-            .n-links li:nth-child(2){width:26px;}
-            .n-links li:nth-child(3){width:18px;}
-            .n-links li:nth-child(4){width:40px;}
-            .n-links a{display:inline-flex;width:100%;min-width:0;align-items:center;justify-content:center;font-size:0;letter-spacing:0;white-space:nowrap;min-height:36px;border:1px solid rgba(240,180,41,.18);background:rgba(24,18,6,.12);}
-            .n-links a::before{display:inline;font-size:.34rem;letter-spacing:.12px;color:currentColor;}
-            .n-links li:nth-child(1) a::before{content:'Hm';}
-            .n-links li:nth-child(2) a::before{content:'Sv';}
-            .n-links li:nth-child(3) a::before{content:'Bk';}
-            .n-links a::after{display:none;}
-            .n-links a.on{border-color:#f0b429;color:#f0ead8;}
-            .n-cta{min-width:0;padding:0 5px!important;font-size:0!important;background:rgba(24,18,6,.12)!important;color:#f0b429!important;}
-            .n-links .n-cta::before{content:'Demo';display:inline;color:#f0b429;font-size:.34rem;letter-spacing:.12px;}
-            #home{padding-top:72px;}
+            .n-links{display:none;}
+            .n-menu-btn{display:flex;position:absolute;right:12px;top:50%;transform:translateY(-50%);min-width:72px;height:42px;padding:0 10px;gap:8px;font-size:.52rem;letter-spacing:1.2px;justify-content:center;}
+            .n-menu-btn .bars span{width:14px;}
+            .m-menu{right:12px;left:12px;width:auto;}
+            #home{padding-top:76px;}
             .hero-art{inset:170px -8% 110px 34%;opacity:.3;}
             .hero-inner{padding:120px 5% 60px;}
             .h-title{font-size:clamp(3rem,11vw,4.5rem);}
@@ -510,6 +516,24 @@
         <li><a href="#book">Book</a></li>
         <li><a href="#book" class="n-cta">Free Demo</a></li>
     </ul>
+    <button class="n-menu-btn" id="nMenuBtn" type="button" aria-expanded="false" aria-controls="mMenu">
+        <span>Menu</span>
+        <span class="bars"><span></span><span></span><span></span></span>
+    </button>
+    <div class="m-menu" id="mMenu">
+        <div class="m-menu-top">
+            <div>
+                <div class="m-menu-title">Landscape Lighting</div>
+                <div class="m-menu-copy">&amp; More · San Diego</div>
+            </div>
+        </div>
+        <ul class="m-menu-list">
+            <li><a href="#home"><span>Home</span><strong>Start</strong></a></li>
+            <li><a href="#services"><span>Services</span><strong>Explore</strong></a></li>
+            <li><a href="#book"><span>Book</span><strong>Schedule</strong></a></li>
+            <li><a href="#book"><span>Free Demo</span><strong>Request</strong></a></li>
+        </ul>
+    </div>
 </nav>
 
 <!-- HERO -->
@@ -695,10 +719,33 @@
     setInterval(()=>{ring.style.left=mx+'px';ring.style.top=my+'px';},55);
 
     /* NAV */
+    const menuBtn=document.getElementById('nMenuBtn'),mobileMenu=document.getElementById('mMenu');
+    function closeMenu(){
+        if(!menuBtn||!mobileMenu)return;
+        menuBtn.classList.remove('o');
+        mobileMenu.classList.remove('o');
+        menuBtn.setAttribute('aria-expanded','false');
+    }
+    function toggleMenu(){
+        if(!menuBtn||!mobileMenu)return;
+        const isOpen=mobileMenu.classList.toggle('o');
+        menuBtn.classList.toggle('o',isOpen);
+        menuBtn.setAttribute('aria-expanded',String(isOpen));
+    }
+    if(menuBtn&&mobileMenu){
+        menuBtn.addEventListener('click',toggleMenu);
+        document.addEventListener('click',e=>{
+            if(!mobileMenu.classList.contains('o'))return;
+            if(e.target.closest('#mMenu')||e.target.closest('#nMenuBtn'))return;
+            closeMenu();
+        });
+        window.addEventListener('resize',()=>{if(window.innerWidth>640)closeMenu();});
+        document.querySelectorAll('.m-menu a').forEach(a=>a.addEventListener('click',closeMenu));
+    }
     window.addEventListener('scroll',()=>{
         const s=['home','services','book'];let c='';
         s.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-100)c=id;});
-        document.querySelectorAll('.n-links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+c));
+        document.querySelectorAll('.n-links a,.m-menu a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+c));
     });
     /* ── BUILD PENDANT LIGHTS — always exactly 8 ── */
     (function(){
