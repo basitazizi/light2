@@ -251,7 +251,7 @@ footer{padding:34px 5%;border-top:1px solid var(--line);background:#000;}
     nav{height:82px;padding:0 12px;}
     .n-logo{max-width:calc(100% - 92px);gap:8px;align-items:flex-start;}
     .n-logo-mark{width:34px;height:34px;flex-basis:34px;}
-    .n-logo-mark img{width:74px;height:74px;top:54%;}
+    .n-logo-mark img{width:46px;height:90px;top:54%;}
     .n-logo-txt{font-size:.8rem;line-height:.95;white-space:normal;}
     .n-logo-txt span{display:block;margin-top:4px;font-size:.46rem;letter-spacing:2.2px;}
     .n-links{display:none;}
